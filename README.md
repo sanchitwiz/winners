@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Career Roadmap Backend Server
 
-## Getting Started
+A Node.js Express server that generates personalized career roadmaps using AI analysis.
 
-First, run the development server:
+## Features
 
-```bash
+- 🚀 RESTful API for roadmap generation
+- 🤖 AI-powered analysis using Grok API
+- ✅ Input validation and sanitization
+- 🛡️ Security middleware (Helmet, CORS, Rate limiting)
+- 📝 Comprehensive logging
+- 🔧 Error handling and recovery
+
+## Setup
+
+1. **Install dependencies:**
+   \`\`\`bash
+   npm install
+   \`\`\`
+
+2. **Environment setup:**
+   \`\`\`bash
+   cp .env.example .env
+   \`\`\`
+   
+   Edit `.env` and add your XAI API key:
+   \`\`\`
+   XAI_API_KEY=your_actual_api_key_here
+   \`\`\`
+
+3. **Start the server:**
+   \`\`\`bash
+   # Development mode
+   npm run dev
+   
+   # Production mode
+   npm start
+   \`\`\`
+
+## API Endpoints
+
+### POST /api/roadmap/generate
+
+Generate a personalized career roadmap.
+
+**Request Body:**
+\`\`\`json
+{
+  "dreamJob": "Full Stack Developer",
+  "timePeriod": "6 months",
+  "knowledgeQuestions": [
+    {
+      "question": "How familiar are you with JavaScript?",
+      "answer": "I know basic syntax and can write simple functions"
+    },
+    {
+      "question": "Do you have experience with databases?",
+      "answer": "I've used MySQL for a few small projects"
+    }
+  ]
+}
+\`\`\`
+
+**Response:**
+\`\`\`json
+{
+  "success": true,
+  "data": {
+    "id": "roadmap_1234567890_abc123",
+    "dreamJob": "Full Stack Developer",
+    "timePeriod": "6 months",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "roadmap": {
+      "skillGapAnalysis": { ... },
+      "learningPath": { ... },
+      "priorityAreas": [ ... ],
+      "recommendedResources": { ... },
+      "timeline": { ... }
+    }
+  }
+}
+\`\`\`
+
+### GET /health
+
+Health check endpoint.
+
+## Error Handling
+
+The API returns structured error responses:
+
+\`\`\`json
+{
+  "success": false,
+  "error": "Validation failed",
+  "details": [
+    {
+      "field": "dreamJob",
+      "message": "Dream job is required"
+    }
+  ],
+  "timestamp": "2024-01-01T00:00:00.000Z"
+}
+\`\`\`
+
+## Rate Limiting
+
+- 100 requests per 15 minutes per IP
+- Configurable via environment variables
+
+## Security Features
+
+- Helmet.js for security headers
+- CORS protection
+- Request size limits
+- Input validation and sanitization
+- Rate limiting
+
+## Development
+
+\`\`\`bash
+# Install nodemon for development
+npm install -g nodemon
+
+# Run in development mode
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Set environment variables in your hosting platform
+2. Ensure XAI_API_KEY is properly configured
+3. Set NODE_ENV=production
+4. Deploy using your preferred method (Vercel, Heroku, etc.)
